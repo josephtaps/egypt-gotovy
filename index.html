@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EGYPT AI HUB PREMIUM</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            /* Более яркий, глубокий фон (Premium Dark) */
+            background: radial-gradient(circle at top, #1e1b4b, #0f172a, #000000);
+            background-attachment: fixed;
+        }
+
+        /* Эффект стекла */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Анимация пульсации */
+        .pulsing-text {
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+
+        /* Свечение заголовка */
+        .title-glow {
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Кнопки игр */
+        .game-btn {
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .active-game-btn {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-color: #a78bfa;
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Скроллбар для чата (тонкий и красивый) */
+        .chat-scroll::-webkit-scrollbar {
+            width: 5px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 10px;
+        }
+
+        /* Выравнивание букв в заголовке */
+        .flag-text {
+            display: inline-flex;
+            align-items: center;
+            line-height: 1;
+            direction: ltr; 
+        }
+
+        /* Анимация появления сообщений */
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-msg {
+            animation: slideIn 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="text-white flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-md glass-panel rounded-3xl shadow-2xl p-6 relative overflow-hidden">
+        
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+            <div class="absolute top-[-50px] left-[-50px] w-32 h-32 bg-blue-500 rounded-full mix-blend-screen filter blur-[60px] opacity-20"></div>
+            <div class="absolute bottom-[-50px] right-[-50px] w-32 h-32 bg-purple-500 rounded-full mix-blend-screen filter blur-[60px] opacity-20"></div>
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+            <div class="flex flex-col">
+                <div class="flag-text title-glow text-3xl font-black tracking-tighter">
+                    <span style="color: #CE1126;">EG</span><span style="color: #FFFFFF;">Y</span><span style="color: #000000;">PT</span>
+                </div>
+                <span class="text-cyan-400 font-bold text-xs tracking-[0.2em]">AI HUB</span>
+            </div>
+
+            <div class="glass-panel px-3 py-1.5 rounded-full flex items-center gap-2">
+                <span class="relative flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <div class="text-xs font-bold text-green-300">
+                    <span id="online-count">42</span> متصل
+                </div>
+            </div>
+        </div>
+        
+        <div id="auth-section" class="mb-6 space-y-3 relative z-10">
+            <p class="text-gray-300 text-sm text-center font-medium">اكتب المعرّف (ID) بتاعك عشان تبدأ</p>
+            <div class="relative">
+                <input id="player-id-input" type="text" placeholder="رقم الايدي الخاص بيك" class="w-full bg-gray-800/50 border border-gray-600 text-white rounded-xl px-4 py-4 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 text-right transition-all backdrop-blur-sm">
+                <div class="absolute left-4 top-4 text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-badge" viewBox="0 0 16 16"><path d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z"/></svg>
+                </div>
+            </div>
+            <button id="connect-btn" class="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg shadow-cyan-500/20">
+                اتصال آمن
+            </button>
+        </div>
+        
+        <div id="predictor-controls" class="hidden opacity-0 transition-opacity duration-700">
+            <div class="mb-5">
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="aviator-btn" class="game-btn active-game-btn flex items-center justify-center gap-2 w-full py-3 px-2 rounded-xl font-bold text-sm">
+                        ✈️ Aviator
+                    </button>
+                    <button id="mines-btn" class="game-btn flex items-center justify-center gap-2 w-full py-3 px-2 rounded-xl font-bold text-sm">
+                        💣 Mines
+                    </button>
+                    <button id="penalty-btn" class="game-btn flex items-center justify-center gap-2 w-full py-3 px-2 rounded-xl font-bold text-sm">
+                        ⚽ Penalty
+                    </button>
+                    <button id="apple-btn" class="game-btn flex items-center justify-center gap-2 w-full py-3 px-2 rounded-xl font-bold text-sm">
+                        🍏 Apple
+                    </button>
+                </div>
+            </div>
+
+            <div id="signal-display" class="relative overflow-hidden bg-black/40 min-h-[220px] rounded-2xl p-6 flex items-center justify-center text-center border border-indigo-500/30 shadow-[inset_0_0_20px_rgba(79,70,229,0.2)]">
+                <div class="absolute inset-0 opacity-10" style="background-image: linear-gradient(#4f46e5 1px, transparent 1px), linear-gradient(90deg, #4f46e5 1px, transparent 1px); background-size: 20px 20px;"></div>
+                
+                <div class="relative z-10">
+                    <p id="signal-text" class="text-gray-400 text-lg font-medium animate-pulse">مستني الإشارة...</p>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <button id="generate-signal-btn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform active:scale-95 shadow-lg shadow-indigo-500/30 uppercase tracking-wider border-t border-white/10">
+                    🚀 الحصول على إشارة
+                </button>
+            </div>
+
+            <div class="mt-6 mb-2">
+                <div class="flex items-center justify-between mb-2 px-1">
+                    <h3 class="text-xs font-bold text-cyan-300 tracking-wide uppercase flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                        شات اللاعبين
+                    </h3>
+                    <span class="text-[10px] text-gray-500 bg-gray-800 px-2 py-0.5 rounded-md">Live</span>
+                </div>
+                
+                <div id="chat-window" class="h-40 bg-black/30 rounded-xl border border-gray-700/50 p-3 overflow-y-auto chat-scroll flex flex-col gap-2 relative">
+                    <div class="text-center text-[10px] text-gray-600 my-2">-- بداية المحادثة --</div>
+                </div>
+
+                <div class="mt-2 flex gap-2">
+                    <input id="chat-input" type="text" placeholder="اكتب رسالة..." class="flex-1 bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-xs text-right text-white focus:border-cyan-500 focus:outline-none">
+                    <button id="send-chat-btn" class="bg-cyan-600 hover:bg-cyan-500 text-white p-2 rounded-lg transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/></svg>
+                    </button>
+                </div>
+            </div>
+            </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+            <a href="https://t.me/tarekfawbot" target="_blank" class="glass-panel hover:bg-sky-500/20 text-white font-bold py-3 px-2 rounded-xl transition-all duration-300 text-center flex flex-col items-center justify-center gap-1 border border-sky-500/30 group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-sky-400 group-hover:text-white transition-colors" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.226.63.42.996.635.62.395.86.205.975-.258a1.06 1.06 0 0 0 .117-.517c.07-.414.159-1.185.159-1.185s.012-.11.117-.375c.05-.13.11-.253.185-.344l.016-.02c.16-.245.4-.557.4-.557s.078-.08.18-.184c.101-.104.18-.184.18-.184s.078-.08.114-.133c.038-.053.075-.104.11-.16B.03 8.35 15.22 4.223.865 3.312c-.775-.45-1.48-.18-1.76.193s-.255.935-.255.935l-3.328 3.328c-.283.283-.56.565-.56.565s-.182.173-.32.32c-.138.147-.286.295-.286.295l-1.05 1.05c-.282.282-.563.565-.563.565s-.182.173-.32.32c-.137.146-.285.294-.285.294l-2.078 2.078c-.282.282-.563.565-.563.565s-.182.173-.32.32c-.137.146-.285.294-.285.294L8.287 5.906z"/>
+                </svg>
+                <span class="text-xs">بوت تليجرام</span>
+            </a>
+            <a href="https://refpa39407.com/L?tag=d_5199245m_59685c_&site=5199245&ad=59685&r=registration" target="_blank" class="glass-panel hover:bg-emerald-500/20 text-white font-bold py-3 px-2 rounded-xl transition-all duration-300 text-center flex flex-col items-center justify-center gap-1 border border-emerald-500/30 group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="text-emerald-400 group-hover:text-white transition-colors" viewBox="0 0 16 16"><path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v7a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 11.5v-7A1.5 1.5 0 0 1 1.5 3H2V1.78a1.5 1.5 0 0 1 1.864-1.454l1.714.286a.5.5 0 0 1 .42.495V3h4.5V1.78a.5.5 0 0 1 .42-.495l1.714-.286zM1 4.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.5-.5H1z"/><path d="M13 5.5a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"/></svg>
+                <span class="text-xs">شحن الرصيد</span>
+            </a>
+        </div>
+
+        <div class="mt-8 text-center">
+            <p class="text-[10px] text-gray-500 font-mono tracking-widest opacity-50">
+                &copy; 2026 EGYPT AI HUB SYSTEM
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- ПЕРЕМЕННЫЕ ---
+        const connectBtn = document.getElementById('connect-btn');
+        const playerIdInput = document.getElementById('player-id-input');
+        const predictorControls = document.getElementById('predictor-controls');
+        const authSection = document.getElementById('auth-section');
+        const generateSignalBtn = document.getElementById('generate-signal-btn');
+        const signalText = document.getElementById('signal-text');
+        
+        // Чат и Онлайн
+        const onlineCountElement = document.getElementById('online-count');
+        const chatWindow = document.getElementById('chat-window');
+        const chatInput = document.getElementById('chat-input');
+        const sendChatBtn = document.getElementById('send-chat-btn');
+
+        let selectedGame = 'aviator';
+        let isGenerating = false;
+
+        // --- ЛОГИКА ОНЛАЙНА ---
+        // Начальное значение
+        let currentOnline = 42; 
+        
+        function updateOnlineCount() {
+            // Случайное изменение от -3 до +3
+            const change = Math.floor(Math.random() * 7) - 3;
+            currentOnline += change;
+
+            // Держим в рамках 30-55
+            if (currentOnline < 30) currentOnline = 30 + Math.floor(Math.random() * 5);
+            if (currentOnline > 55) currentOnline = 55 - Math.floor(Math.random() * 5);
+
+            onlineCountElement.textContent = currentOnline;
+            onlineCountElement.parentElement.classList.add('scale-105');
+            setTimeout(() => onlineCountElement.parentElement.classList.remove('scale-105'), 200);
+        }
+        
+        // Обновляем каждые 2.5 секунды
+        setInterval(updateOnlineCount, 2500);
+
+
+        // --- ЛОГИКА ЧАТА ---
+        const fakeNames = ["أحمد م.", "كريم س.", "محمد ع.", "يوسف ح.", "مصطفى ك.", "علي ب.", "عمر ط."];
+        const fakeMessages = [
+            "يا جماعة البرنامج ده نار 🔥",
+            "لسه كسبان 500 جنيه في افياتور!",
+            "حد جرب الماينز؟ النتايج حلوة النهاردة",
+            "ألف شكر يا باشا على البرنامج",
+            "توقعات ضربات الجزاء ممتازة",
+            "الحمد لله عوضت خسارتي كلها",
+            "استنوا شوية قبل ما تلعبوا تاني",
+            "أنا سحبت فلوسي خلاص، كفاية كده النهاردة 😄",
+            "عاش يا رجالة"
+        ];
+
+        function addChatMessage(name, text, isUser = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg flex flex-col ${isUser ? 'items-start' : 'items-end'}`;
+            
+            const bubbleColor = isUser ? 'bg-cyan-600/30 border-cyan-500/50' : 'bg-gray-700/40 border-gray-600/30';
+            const nameColor = isUser ? 'text-cyan-300' : 'text-gray-400';
+
+            msgDiv.innerHTML = `
+                <div class="max-w-[85%] ${bubbleColor} border rounded-lg px-3 py-1.5 backdrop-blur-sm">
+                    <span class="text-[10px] ${nameColor} font-bold mb-0.5 block text-right">${name}</span>
+                    <p class="text-xs text-white text-right leading-relaxed">${text}</p>
+                </div>
+            `;
+            
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Автопрокрутка вниз
+        }
+
+        // Стартовые сообщения
+        setTimeout(() => addChatMessage(fakeNames[0], fakeMessages[0]), 500);
+        setTimeout(() => addChatMessage(fakeNames[1], fakeMessages[1]), 1500);
+
+        // Бот пишет каждые 4-7 секунд
+        function botChatLoop() {
+            const randomDelay = Math.floor(Math.random() * 3000) + 4000;
+            setTimeout(() => {
+                const rName = fakeNames[Math.floor(Math.random() * fakeNames.length)];
+                const rMsg = fakeMessages[Math.floor(Math.random() * fakeMessages.length)];
+                addChatMessage(rName, rMsg);
+                botChatLoop();
+            }, randomDelay);
+        }
+        botChatLoop();
+
+        // Отправка сообщения пользователем
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (text) {
+                addChatMessage("أنا (Admin)", text, true);
+                chatInput.value = '';
+            }
+        }
+        
+        sendChatBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+
+        // --- ЛОГИКА ИГРЫ (ПРЕДИКТОРА) ---
+        
+        // Переключение игр
+        const gameButtons = document.querySelectorAll('.game-btn');
+        gameButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Убираем активный класс у всех
+                gameButtons.forEach(b => b.classList.remove('active-game-btn', 'border-indigo-500'));
+                // Добавляем нажатой
+                const target = e.currentTarget;
+                target.classList.add('active-game-btn');
+                selectedGame = target.id.replace('-btn', '');
+            });
+        });
+
+        // АВТОРИЗАЦИЯ
+        connectBtn.addEventListener('click', () => {
+            const playerId = playerIdInput.value.trim();
+            const idRegex = /^\d{10,13}$/;
+
+            if (!idRegex.test(playerId)) {
+                playerIdInput.classList.add('border-red-500', 'bg-red-900/20');
+                setTimeout(() => playerIdInput.classList.remove('border-red-500', 'bg-red-900/20'), 2000);
+                return;
+            }
+
+            connectBtn.disabled = true;
+            connectBtn.innerHTML = '<span class="animate-spin inline-block mr-2">↻</span> جاري الاتصال...';
+
+            setTimeout(() => {
+                // Скрываем авторизацию
+                authSection.style.display = 'none';
+                
+                // Показываем интерфейс
+                predictorControls.classList.remove('hidden');
+                // Небольшая задержка для плавности анимации opacity
+                setTimeout(() => predictorControls.classList.remove('opacity-0'), 50);
+            }, 1500);
+        });
+
+        // ГЕНЕРАЦИЯ СИГНАЛОВ (Та же логика, но красивее HTML)
+        generateSignalBtn.addEventListener('click', () => {
+            if (isGenerating) return;
+            isGenerating = true;
+            
+            generateSignalBtn.disabled = true;
+            generateSignalBtn.classList.add('opacity-75', 'cursor-not-allowed');
+            signalText.innerHTML = '<span class="pulsing-text text-yellow-400">...جاري التحليل والاتصال بالسيرفر</span>';
+
+            setTimeout(() => {
+                let resultHTML = '';
+                
+                if (selectedGame === 'aviator') {
+                    const chance = Math.random();
+                    let coeff;
+                    if (chance < 0.75) coeff = (Math.random() * (2.00 - 1.01) + 1.01).toFixed(2);
+                    else if (chance < 0.95) coeff = (Math.random() * (4.00 - 2.01) + 2.01).toFixed(2);
+                    else coeff = (Math.random() * (10.00 - 4.01) + 4.01).toFixed(2);
+                    
+                    resultHTML = `
+                        <div class="flex flex-col items-center animate-bounce-short">
+                            <span class="text-gray-400 text-xs mb-1">الهدف المتوقع</span>
+                            <span class="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-purple-400 to-indigo-500" style="filter: drop-shadow(0 0 10px rgba(139,92,246,0.5))">x${coeff}</span>
+                        </div>`;
+                } 
+                else if (selectedGame === 'mines') {
+                    const safeCells = new Set();
+                    while (safeCells.size < 5) safeCells.add(Math.floor(Math.random() * 25) + 1);
+                    
+                    let grid = '<div class="grid grid-cols-5 gap-2">';
+                    for(let i=1; i<=25; i++) {
+                        const isSafe = safeCells.has(i);
+                        grid += `<div class="w-8 h-8 rounded bg-gray-700/50 flex items-center justify-center border border-gray-600 ${isSafe ? 'border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.4)]' : ''}">
+                                    ${isSafe ? '<span class="text-emerald-400">⭐</span>' : ''}
+                                 </div>`;
+                    }
+                    grid += '</div>';
+                    resultHTML = grid;
+                }
+                else if (selectedGame === 'penalty') {
+                    const target = Math.floor(Math.random() * 15) + 1;
+                    let grid = '<div class="grid grid-cols-5 gap-2">';
+                    for(let i=1; i<=15; i++) {
+                        const isTarget = i === target;
+                        grid += `<div class="w-8 h-8 rounded bg-gray-700/50 flex items-center justify-center border border-gray-600 ${isTarget ? 'bg-green-500/20 border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.5)]' : ''}">
+                                    ${isTarget ? '⚽' : ''}
+                                 </div>`;
+                    }
+                    grid += '</div>';
+                    resultHTML = grid;
+                }
+                else if (selectedGame === 'apple') {
+                    const safePath = [];
+                    for(let i=0; i<10; i++) safePath.push(Math.floor(Math.random() * 5));
+                    
+                    // Показываем только последние 4 ряда для экономии места
+                    let grid = '<div class="grid grid-cols-5 gap-1">';
+                    for(let r=3; r>=0; r--) {
+                        for(let c=0; c<5; c++) {
+                            const isSafe = c === safePath[r];
+                            grid += `<div class="w-8 h-8 rounded bg-gray-700/50 flex items-center justify-center border border-gray-600 ${isSafe ? 'border-rose-500 bg-rose-500/20' : ''}">
+                                        ${isSafe ? '🍎' : '<span class="opacity-10">?</span>'}
+                                     </div>`;
+                        }
+                    }
+                    grid += '</div>';
+                     resultHTML = `
+                        <div class="flex flex-col items-center">
+                            <span class="text-gray-400 text-xs mb-2">المسار الآمن (آخر 4 خطوات)</span>
+                            ${grid}
+                        </div>`;
+                }
+
+                signalText.innerHTML = resultHTML;
+                isGenerating = false;
+                generateSignalBtn.disabled = false;
+                generateSignalBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }, 2000);
+        });
+
+    </script>
+</body>
+</html>
